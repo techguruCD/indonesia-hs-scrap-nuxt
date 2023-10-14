@@ -1,13 +1,9 @@
-import { drizzle } from 'drizzle-orm/better-sqlite3'
-import Database from 'better-sqlite3'
 import axios from "axios";
 
 import { Lists } from "./server/db/schema/Lists.js"
 const API_TOKEN = 'Basic aW5zd18yOmJhYzJiYXM2'
 
-const dbPath = process.env.DB_PAHT || 'db.sqlite';
-const sqlite = new Database(dbPath)
-const _db = drizzle(sqlite)
+import db from './db.js'
 
 axios.get('https://api.insw.go.id/api/cms/hscode?keyword=&size=10&from=0', { headers: { Authorization: API_TOKEN } })
     .then(({ data: res }) => {
@@ -55,7 +51,7 @@ axios.get('https://api.insw.go.id/api/cms/hscode?keyword=&size=10&from=0', { hea
                         mfn_flag_sd: JSON.stringify(mfn.flag_sda),
                     })
                 })
-                _db.insert(Lists).values(newRows)
+                db().insert(Lists).values(newRows)
                     .then(() => {
                         console.log("done")
                     }).catch(err => {

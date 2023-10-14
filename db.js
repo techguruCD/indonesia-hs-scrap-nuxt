@@ -1,13 +1,9 @@
-import { drizzle as drizzleD1, DrizzleD1Database } from 'drizzle-orm/d1'
-import { createClient as createLibSQLClient } from '@libsql/client/http'
-import { drizzle as drizzleLibSQL, LibSQLDatabase } from 'drizzle-orm/libsql'
-import { drizzle, BetterSQLite3Database } from 'drizzle-orm/better-sqlite3'
+import { drizzle } from 'drizzle-orm/better-sqlite3'
 import Database from 'better-sqlite3'
-import { join } from 'pathe'
 
-let _db: DrizzleD1Database | BetterSQLite3Database | LibSQLDatabase | null = null
+let _db = null;
 
-export const useDB = () => {
+export default () => {
     if (!_db) {
         // if (process.env.TURSO_DB_URL && process.env.TURSO_DB_TOKEN) {
         //     // Turso in production
